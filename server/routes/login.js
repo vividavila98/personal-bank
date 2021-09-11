@@ -15,11 +15,11 @@ router.post("/login", async (req, res) => {
 
     // Check if the user exists in database
     const user = await User.findOne({email: req.body.email});
-    if (!user) return res.status(400).send("Email does not exist.");
+    if (!user) return res.status(400).json({auth: false, message: "Email does not exist."});
 
     // Check if password is correct
     const validPassword = await bcrypt.compare(req.body.password, user.password);
-    if (!validPassword) return res.status(400).send("Password is incorrect.");
+    if (!validPassword) return res.status(400).json({auth: false, message: "Password is incorrect."});
 
     // Create and assign a token
     // Send id to frontend as response payload (res.data)
@@ -32,12 +32,14 @@ router.post("/login", async (req, res) => {
     // res.set('Access-Control-Allow-Credentials', 'true');
      
     // httpOnly cookie can't be accessed thru javascript
-    res.cookie("auth-token",  token, {
+    res.cookie("authToken",  token, {
         httpOnly: true,
         sameSite: "strict",
         secure: true,
         // expires: new Date(Date.now() + 450000)
-    }).send("You are logged in"); 
+    });
+    
+    res.json({auth: true, name: user.name, email: user.email});
 });
 
 export default router; 

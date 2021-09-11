@@ -7,7 +7,7 @@ export default function useLoginForm(url) {
         password: ""
     });
 
-    const [redirect, setRedirect] = useState(false);
+    // const [redirect, setRedirect] = useState(false);
 
     const handleFormChange = e => {
         const { name, value } = e.target;
@@ -26,12 +26,15 @@ export default function useLoginForm(url) {
             }, 
             {withCredentials: true});
 
+            // save res.data to useContext() later i think
+
             console.log(res.data);
-            setRedirect(true);
+            // setRedirect(true);
+            
         } catch(e) {
             console.error(e);
         }
     }
 
-    return { handleFormChange, submitForm, values, redirect };
+    return { handleFormChange, submitForm, values };
 }

@@ -7,11 +7,11 @@ export default function Login() {
     let history = useHistory();
     
     const url = "http://localhost:3001/api/login"; 
-    const { handleFormChange, submitForm, values, redirect } = useLoginForm(url);
+    const { handleFormChange, submitForm, values } = useLoginForm(url);
 
-    if (redirect) {
-        return <Redirect to="/account/profile" />
-    }
+    // if (redirect) {
+    //     return <Redirect to="/account/profile" />
+    // }
     
     return (
         <div className="entry-page">

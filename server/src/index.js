@@ -1,7 +1,7 @@
 import express from "express";
 import register from "../routes/register.js";
 import login from "../routes/login.js";
-import profile from "../routes/profile.js";
+import userInfo from "../routes/userInfo.js";
 import { connectDB } from "./db.js";
 import cors from "cors";
 import cookieParser from "cookie-parser"; 
@@ -25,7 +25,7 @@ app.get("/", (req, res) => {
 // Define our routes
 app.use("/api", register);
 app.use("/api", login);
-app.use("/api", profile);
+app.use("/api", userInfo);
 
 app.listen(3001, () => {
     console.log("Server is running!");
