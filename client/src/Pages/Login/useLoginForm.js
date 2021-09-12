@@ -26,7 +26,6 @@ export default function useLoginForm(url) {
             }, 
             {withCredentials: true});
 
-            // save res.data to useContext() later i think
 
             console.log(res.data);
             // setRedirect(true);

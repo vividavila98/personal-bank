@@ -15,7 +15,7 @@ export const verifyToken = (req, res, next) => {
         req.user = verified; // saves token and id
         next();
     } catch(e) {
-        res.clearCookies("authToken");
+        res.clearCookie("authToken");
         res.status(400);
         res.json({auth: false, message: "Invalid token"});
     }
