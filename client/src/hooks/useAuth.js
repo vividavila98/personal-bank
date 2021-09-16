@@ -1,10 +1,12 @@
-import React, { useState, useContext } from 'react';
+import { useContext } from 'react';
 import axios from "axios";
+import { useHistory } from 'react-router';
 import { UserContext } from './UserContext';
 
 export default function useAuth() {
     axios.defaults.withCredentials = true;
-    const { user, setUser } = useContext(UserContext);
+    let history = useHistory();
+    const { setUser } = useContext(UserContext);
 
     const url = "http://localhost:3001/api"
 
@@ -13,6 +15,7 @@ export default function useAuth() {
         try {
             const res = await axios.get(`${url}/userInfo`, {withCredentials: true});
             setUser(res.data);
+            history.push('/account/profile');
         } catch(e) {
             console.error(e);
         }

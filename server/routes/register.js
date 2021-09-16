@@ -1,8 +1,12 @@
 import express from "express";
 const router = express.Router(); // routing system
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 import { User } from "../models/user.js";
 import { registerValidation } from "../src/validation.js";
+
+dotenv.config();
 
 router.post("/register", async (req, res) => {
     // Validate before creating a user
@@ -26,12 +30,24 @@ router.post("/register", async (req, res) => {
     
     try {
         // save to db
-        const savedUser = await newUser.save();
-        res.send({name: newUser.name});
+        await newUser.save();
+        
+        const token = jwt.sign({_id: newUser._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "1h"});
+     
+        // httpOnly cookie can't be accessed thru javascript
+        res.cookie("authToken",  token, {
+            httpOnly: true,
+            sameSite: "strict",
+            secure: true,
+            // expires: new Date(Date.now() + 450000)
+        });
+        
+        res.json({auth: true, name: newUser.name, email: newUser.email});
     } catch(e) {
         console.error(e);
         res.status(400).send(e);
     }
+
 });
 
 export default router; 

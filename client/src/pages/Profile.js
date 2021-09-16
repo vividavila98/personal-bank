@@ -1,11 +1,8 @@
-import React from 'react';
-import useProfile from "../hooks/useProfile.js";
+import React, { useContext } from 'react';
+import { UserContext } from "../hooks/UserContext.js";
 
 export default function Profile() {
-    const url = "http://localhost:3001/api/userInfo"; 
-    const { user } = useProfile(url);
-
-    console.log(user);
+    const { user } = useContext(UserContext);
 
     return (
         user ? (

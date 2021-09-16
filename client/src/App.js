@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useMemo } from "react";
+import React, { useMemo } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./pages/Home.js";
 import Register from './pages/Register.js';
@@ -23,8 +23,8 @@ function App() {
         <Route path="/" exact component={Home}/>
         <Route path="/account/register" exact component={Register}/>
         <Route path="/account/login" exact component={Login}/>
-        <Route path="/account/profile" exact component={Profile}/>
-        {/* <PrivateRoute path="/account/profile" component={Profile}/> */}
+        {/* <Route path="/account/profile" exact component={Profile}/> */}
+        <PrivateRoute path="/account/profile" component={Profile}/>
         
         <Route path="*" exact component={NotFound}/>
       </Switch>

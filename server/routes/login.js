@@ -32,8 +32,6 @@ router.post("/login", async (req, res) => {
         secure: true,
         // expires: new Date(Date.now() + 450000)
     });
-
-    res.cookie("loggedIn", "true");
     
     res.json({auth: true, name: user.name, email: user.email});
 });

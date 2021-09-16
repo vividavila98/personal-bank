@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from "react-router-dom";
+import { Redirect } from 'react-router-dom';
+import { UserContext } from '../hooks/UserContext';
 
 export default function Home() {
     let history = useHistory();
+    const { user } = useContext(UserContext);
+   
+   if(user) {
+      return <Redirect to='/account/profile'/>
+   }
 
     return (
         <div className="entry-page">

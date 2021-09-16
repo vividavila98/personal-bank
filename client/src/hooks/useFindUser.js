@@ -11,7 +11,7 @@ export default function useFindUser() {
         try {
             const res = await axios.get(`${url}/userInfo`, {withCredentials: true});
             setUser(res.data);
-            console.log(res.data);
+            
         } catch(e) {
             console.error(e);
         }

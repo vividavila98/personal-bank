@@ -2,17 +2,17 @@ import React, { useContext } from 'react';
 import { Route, Redirect } from "react-router-dom";
 import { UserContext } from "./UserContext.js";
 
-export default function PrivateRoute({component: Component, ...rest}) {
+export default function PrivateRoute(props) {
     const { user } = useContext(UserContext);
 
+    const {component: Component, ...rest} = props;
 
-    return (
-        <Route {...rest} render={() => {
-            if (user.name) {
-                return <Component />
-            } else {
-               return <Redirect to="/account/login" />
-            }
-        }}/>
-    )
+    if(user){
+        return ( <Route {...rest} render={(props) => 
+             (<Component {...props}/>)
+              }
+           />
+    )}
+
+    return <Redirect to="/account/login" />
 } 
