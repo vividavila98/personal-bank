@@ -24,12 +24,6 @@ router.post("/login", async (req, res) => {
     // Create and assign a token
     // Send id to frontend as response payload (res.data)
     const token = jwt.sign({_id: user._id}, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "1h"});
-   
-    // res.header("auth-token", token).send(token);
-
-    // res.set('Access-Control-Allow-Origin', 'http://localhost:3000/');
-    // res.set('Access-Control-Allow-Methods', 'POST');
-    // res.set('Access-Control-Allow-Credentials', 'true');
      
     // httpOnly cookie can't be accessed thru javascript
     res.cookie("authToken",  token, {
@@ -38,6 +32,8 @@ router.post("/login", async (req, res) => {
         secure: true,
         // expires: new Date(Date.now() + 450000)
     });
+
+    res.cookie("loggedIn", "true");
     
     res.json({auth: true, name: user.name, email: user.email});
 });

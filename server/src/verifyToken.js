@@ -19,5 +19,4 @@ export const verifyToken = (req, res, next) => {
         res.status(400);
         res.json({auth: false, message: "Invalid token"});
     }
-
 }

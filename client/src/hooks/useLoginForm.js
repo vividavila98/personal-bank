@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "./UserContext.js";
 import Axios from "axios";
 
 export default function useLoginForm(url) {
@@ -7,7 +8,7 @@ export default function useLoginForm(url) {
         password: ""
     });
 
-    // const [redirect, setRedirect] = useState(false);
+    const { user, setUser } = useContext(UserContext);
 
     const handleFormChange = e => {
         const { name, value } = e.target;
@@ -26,8 +27,10 @@ export default function useLoginForm(url) {
             }, 
             {withCredentials: true});
 
-
-            console.log(res.data);
+            setUser(res.data);
+            localStorage.setItem("name", res.data.name);
+            localStorage.setItem("email", res.data.email);
+            console.log(user);
             // setRedirect(true);
             
         } catch(e) {

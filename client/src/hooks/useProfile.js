@@ -1,16 +1,13 @@
-import { useEffect, useContext } from "react";
-import { UserContext } from "../../Helper/UserContext";
+import { useContext, useEffect } from "react";
+import { UserContext } from "./UserContext.js";
 import Axios from "axios";
 
 export default function useProfile(url) {
     const { user, setUser } = useContext(UserContext);
 
-    const getUserInfo = async e => {
-        e.preventDefault();
+    const getUserInfo = async () => {
         try {
             const res = await Axios.get(url, {withCredentials: true});
-
-            console.log(res.data);
             
             // save to context
             setUser(res.data);
@@ -21,6 +18,18 @@ export default function useProfile(url) {
             console.error(e);
         }
     }
+
+    useEffect(() => {
+        const localName = localStorage.getItem("name");
+        const localEmail = localStorage.getItem("email");
+        if (localName) {
+            setUser({
+                ...user, 
+                name: localName,
+                email: localEmail
+            })
+        }
+    }, []);
 
     return { getUserInfo, user };
 }
