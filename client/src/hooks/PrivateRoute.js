@@ -7,7 +7,7 @@ export default function PrivateRoute(props) {
 
     const {component: Component, ...rest} = props;
 
-    if(user){
+    if(user) {
         return ( <Route {...rest} render={(props) => 
              (<Component {...props}/>)
               }

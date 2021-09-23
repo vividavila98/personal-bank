@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import axios from "axios";
 import { useHistory } from 'react-router';
 import { UserContext } from './UserContext';
@@ -6,7 +6,7 @@ import { UserContext } from './UserContext';
 export default function useAuth() {
     axios.defaults.withCredentials = true;
     let history = useHistory();
-    const { setUser } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
 
     const url = "http://localhost:3001/api"
 
@@ -21,6 +21,10 @@ export default function useAuth() {
         }
     }
 
+    useEffect(() => {
+        setUserContext();
+    }, [user])
+
     // Register user
     const registerUser = async (data) => {
         const { name, email, password} = data;
@@ -34,8 +38,6 @@ export default function useAuth() {
             console.error(e);
         }
     }
-
-    // Do I want to create a cookie on register AND login? 
 
     // Login user
     const loginUser = async (data) => {

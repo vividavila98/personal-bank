@@ -1,6 +1,7 @@
 import express from "express";
 import register from "../routes/register.js";
 import login from "../routes/login.js";
+import logout from "../routes/logout.js";
 import userInfo from "../routes/userInfo.js";
 import { connectDB } from "./db.js";
 import cors from "cors";
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 app.use("/api", register);
 app.use("/api", login);
 app.use("/api", userInfo);
+app.use("/api", logout);
 
 app.listen(3001, () => {
     console.log("Server is running!");
